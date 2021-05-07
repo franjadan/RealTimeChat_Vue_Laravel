@@ -1917,7 +1917,8 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (response) {
         _this3.messages.push({
           message: response.data.message.message,
-          user: response.data.user
+          user: response.data.user,
+          created_at: response.data.message.created_at
         });
       })["catch"](function (err) {
         alert("Error el enviar el mensaje.");
@@ -61783,7 +61784,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "row justify-content-center" }, [
     _c("div", { staticClass: "col-md-12" }, [
-      _c("h2", [_vm._v("Messages")]),
+      _c("h2", [_vm._v("Mensajes")]),
       _vm._v(" "),
       _c(
         "div",
@@ -61813,7 +61814,7 @@ var render = function() {
                         staticClass: "text-right",
                         staticStyle: { "font-size": "10px", margin: "0px" }
                       },
-                      [_vm._v(_vm._s(message.created_at))]
+                      [_vm._v(_vm._s(_vm._f("moment")(message.created_at)))]
                     )
                   ])
                 : _vm._e(),
@@ -61844,8 +61845,8 @@ var render = function() {
         0
       ),
       _vm._v(" "),
-      _c("div", { staticClass: "input-group" }, [
-        _c("input", {
+      _c("div", [
+        _c("textarea", {
           directives: [
             {
               name: "model",
@@ -61855,11 +61856,7 @@ var render = function() {
             }
           ],
           staticClass: "form-control",
-          attrs: {
-            type: "text",
-            name: "message",
-            placeholder: "Escribe un mensaje..."
-          },
+          attrs: { name: "message", placeholder: "Escribe un mensaje..." },
           domProps: { value: _vm.newMessage },
           on: {
             keyup: function($event) {
@@ -61882,7 +61879,10 @@ var render = function() {
         _vm._v(" "),
         _c(
           "button",
-          { staticClass: "btn btn-primary", on: { click: _vm.sendMessage } },
+          {
+            staticClass: "btn btn-primary my-2",
+            on: { click: _vm.sendMessage }
+          },
           [_vm._v(" Send")]
         )
       ])
