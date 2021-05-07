@@ -2,7 +2,7 @@
     <div class="row justify-content-center">
         <div class="col-md-12">
             <h2>Mensajes</h2>
-            <div class="card mx-2 my-2 bg-light" >
+            <div class="card mx-2 my-2 bg-light" style="min-height: 50px;" >
                 <div :class="{'card mx-2 my-2 col-md-5 p-2 message rounded align-self-end': message.user.id == userId, 'card mx-2 my-2 col-md-5 p-2 message rounded': message.user.id != userId }" v-for="message in messages" :key="message.id">
                     <div v-if="message.user.id == userId">
                         <p style="margin: 0px;">{{ message.message }}</p>

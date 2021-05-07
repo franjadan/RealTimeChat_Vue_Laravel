@@ -29,5 +29,13 @@ class DatabaseSeeder extends Seeder
             'password' => \bcrypt("qwerasdf"),
             'remember_token' => Str::random(10),
         ]);
+
+        \App\Models\User::create([
+            'name' => 'Joe Doe',
+            'email' => 'user3@qastusoft.com',
+            'email_verified_at' => now(),
+            'password' => \bcrypt("qwerasdf"),
+            'remember_token' => Str::random(10),
+        ]);
     }
 }

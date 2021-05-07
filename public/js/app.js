@@ -61788,7 +61788,10 @@ var render = function() {
       _vm._v(" "),
       _c(
         "div",
-        { staticClass: "card mx-2 my-2 bg-light" },
+        {
+          staticClass: "card mx-2 my-2 bg-light",
+          staticStyle: { "min-height": "50px" }
+        },
         _vm._l(_vm.messages, function(message) {
           return _c(
             "div",
