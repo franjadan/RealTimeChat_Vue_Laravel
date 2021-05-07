@@ -2,6 +2,6 @@
 
 @section('content')
 <div class="container">
-    <chat />
+    <chat currentuserid={{ auth()->user()->id }} />
 </div>
 @endsection

@@ -1,9 +1,21 @@
 <template>
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-md-12">
             <h2>Messages</h2>
-            <div v-for="message in messages" :key="message.id">
-                @{{ message.user.name }}: {{ message.message }}
+            <div class="card mx-2 my-2 bg-light" >
+                <div :class="{'card mx-2 my-2 col-md-5 p-2 message rounded align-self-end': message.user.id == userId, 'card mx-2 my-2 col-md-5 p-2 message rounded': message.user.id != userId }" v-for="message in messages" :key="message.id">
+                    <div v-if="message.user.id == userId">
+                        <p style="margin: 0px;">{{ message.message }}</p>
+                        <p style="font-size: 10px; margin: 0px;" class="text-right">{{ message.created_at }}</p>
+                    </div>
+
+                    <div v-if="message.user.id != userId">
+                        <h6><i>@{{ message.user.name }}</i></h6>
+                        <p style="margin: 0px;">{{ message.message }}</p>
+                        <p style="font-size: 10px; margin: 0px;" class="text-right">{{ message.created_at | moment }}</p>
+                    </div>
+
+                </div>
             </div>
 
             <div class="input-group">
@@ -15,12 +27,24 @@
 </template>
 
 <script>
+
+import moment from 'moment';
+
 export default {
     data() {
         return {
             messages: [],
-            newMessage: ''
+            newMessage: '',
+            userId: this.$props.currentuserid
         }   
+    },
+
+    props: ['currentuserid'],
+
+    filters: {
+        moment: function (date) {
+            return moment(date).format('MM/DD/YYYY hh:mm');
+        }
     },
 
     created() {
