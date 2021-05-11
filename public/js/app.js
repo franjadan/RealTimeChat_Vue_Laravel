@@ -1890,7 +1890,7 @@ __webpack_require__.r(__webpack_exports__);
       return moment__WEBPACK_IMPORTED_MODULE_0___default()(date).format('MM/DD/YYYY hh:mm');
     }
   },
-  created: function created() {
+  mounted: function mounted() {
     var _this = this;
 
     this.fetchMessages();
@@ -1899,7 +1899,12 @@ __webpack_require__.r(__webpack_exports__);
         message: e.message.message,
         user: e.user
       });
+
+      _this.scrollToBottom();
     });
+  },
+  updated: function updated() {
+    this.scrollToBottom();
   },
   methods: {
     fetchMessages: function fetchMessages() {
@@ -1907,6 +1912,8 @@ __webpack_require__.r(__webpack_exports__);
 
       axios.get('/mensajes').then(function (response) {
         _this2.messages = response.data;
+
+        _this2.scrollToBottom();
       });
     },
     addMessage: function addMessage(message) {
@@ -1920,6 +1927,8 @@ __webpack_require__.r(__webpack_exports__);
           user: response.data.user,
           created_at: response.data.message.created_at
         });
+
+        _this3.scrollToBottom();
       })["catch"](function (err) {
         alert("Error el enviar el mensaje.");
         console.log(err);
@@ -1928,6 +1937,10 @@ __webpack_require__.r(__webpack_exports__);
     sendMessage: function sendMessage() {
       this.addMessage(this.newMessage);
       this.newMessage = '';
+    },
+    scrollToBottom: function scrollToBottom() {
+      var container = this.$el.querySelector("#messages_div");
+      container.scrollTop = container.scrollHeight;
     }
   }
 });
@@ -61789,8 +61802,9 @@ var render = function() {
       _c(
         "div",
         {
-          staticClass: "card mx-2 my-2 bg-light",
-          staticStyle: { "min-height": "50px" }
+          staticClass: "card mx-2 my-2 bg-light overflow-auto",
+          staticStyle: { "max-height": "600px", "min-height": "50px" },
+          attrs: { id: "messages_div" }
         },
         _vm._l(_vm.messages, function(message) {
           return _c(
@@ -61798,11 +61812,16 @@ var render = function() {
             {
               key: message.id,
               class: {
-                "card mx-2 my-2 col-md-5 p-2 message rounded align-self-end":
+                "card mx-2 my-2 col-md-5 p-2 message rounded align-self-end ":
                   message.user.id == _vm.userId,
                 "card mx-2 my-2 col-md-5 p-2 message rounded":
                   message.user.id != _vm.userId
-              }
+              },
+              style: [
+                message.user_id == _vm.userId
+                  ? { "background-color": "#c7e5b3" }
+                  : ""
+              ]
             },
             [
               message.user.id == _vm.userId
@@ -61825,7 +61844,9 @@ var render = function() {
               message.user.id != _vm.userId
                 ? _c("div", [
                     _c("h6", [
-                      _c("i", [_vm._v("@" + _vm._s(message.user.name))])
+                      _c("b", [
+                        _c("i", [_vm._v("@" + _vm._s(message.user.name))])
+                      ])
                     ]),
                     _vm._v(" "),
                     _c("p", { staticStyle: { margin: "0px" } }, [
@@ -61886,7 +61907,7 @@ var render = function() {
             staticClass: "btn btn-primary my-2",
             on: { click: _vm.sendMessage }
           },
-          [_vm._v(" Send")]
+          [_vm._v(" Enviar mensaje")]
         )
       ])
     ])
